@@ -1,0 +1,78 @@
+---
+swagger: "2.0"
+info:
+  description: "Decidim API mock"
+  version: "1.0.0"
+  title: "Decidim API"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+schemes:
+- "https"
+- "http"
+paths:
+  /api:
+    post:
+      summary: "Retrieves petition data"
+      operationId: "api"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Returns a petition data"
+        required: true
+        schema:
+          $ref: "#/definitions/PetitionRequest"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/PetitionResponse"
+      x-swagger-router-controller: "Default"
+definitions:
+  PetitionRequest:
+    type: "object"
+    required:
+    - "query"
+    properties:
+      query:
+        type: "string"
+        example: "{ petition(id: 40) { id title description json_schema } }"
+    example:
+      query: "{ petition(id: 40) { id title description json_schema } }"
+  PetitionResponse:
+    type: "object"
+    properties:
+      data:
+        type: "string"
+        default: "{ \"petition\": { \"id\": 40, \"title\": { \"es\": \"Plan de Actuacion\
+          \ municipal\", \"ca\": \"Pla dActuació Municipal\" }, \"description\": {\
+          \ \"es\": \"Descripcion de peticion\", \"ca\": \"This is an amazing petition\
+          \ that you want to participate in\" }, \"json_schema\": { \"optional\":\
+          \ [ { \"scope\": \"can-access\", \"object\": \"voter\", \"predicate\": \"\
+          schema:dateOfBirth\" }, { \"scope\": \"can-access\", \"object\": \"voter\"\
+          , \"predicate\": \"schema:gender\" }, { \"scope\": \"can-access\", \"object\"\
+          : \"voter\", \"predicate\": \"schema:district\" } ], \"mandatory\": [ {\
+          \ \"scope\": \"can-access\", \"object\": \"Barcelona\", \"predicate\": \"\
+          schema:addressLocality\", \"provenance\": { \"url\": \"http://atlantis-decode.s3-website-eu-west-1.amazonaws.com\"\
+          \ } } ] } } }"
+      error:
+        type: "string"
+        example: ""
+        default: ""
+    example:
+      data: "{ \"petition\": { \"id\": 40, \"title\": { \"es\": \"Plan de Actuacion\
+        \ municipal\", \"ca\": \"Pla dActuació Municipal\" }, \"description\": { \"\
+        es\": \"Descripcion de peticion\", \"ca\": \"This is an amazing petition that\
+        \ you want to participate in\" }, \"json_schema\": { \"optional\": [ { \"\
+        scope\": \"can-access\", \"object\": \"voter\", \"predicate\": \"schema:dateOfBirth\"\
+        \ }, { \"scope\": \"can-access\", \"object\": \"voter\", \"predicate\": \"\
+        schema:gender\" }, { \"scope\": \"can-access\", \"object\": \"voter\", \"\
+        predicate\": \"schema:district\" } ], \"mandatory\": [ { \"scope\": \"can-access\"\
+        , \"object\": \"Barcelona\", \"predicate\": \"schema:addressLocality\", \"\
+        provenance\": { \"url\": \"http://atlantis-decode.s3-website-eu-west-1.amazonaws.com\"\
+        \ } } ] } } }"
+      error: ""
